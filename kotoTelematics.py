@@ -3,7 +3,7 @@ import datetime
 import time
 import os
 import pytz
-import pymongo
+import pymongo # not needed
 import pandas as pd
 import plotly_express as px
 import random
