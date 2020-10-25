@@ -13,9 +13,9 @@ import time
 import os
 import pytz
 import pymongo
-import numpy
+import numpy as np
 import pandas as pd
-import plotly_express as px
+#import plotly_express as px
 import random
 
 class telematics:
@@ -23,7 +23,7 @@ class telematics:
     #Initialize
     def __init__(self, access_token:str=None,access_token_file:str="access_token.txt"):
         ##Re-write to do cURL request ##Priority 5
-        self.api_url = "https://gateway.api.cloud.wso2.com/t/hondaranddameri/iep/v1/query"
+        self.api_url = "https://gateway.api.cloud.wso2.com/t/hondaranddameri/iep/v1"
         if access_token:
             self.token = access_token
         else:
@@ -370,6 +370,41 @@ class telematics:
                     continue
         return agg_loc_dict
 
+    @staticmethod
+    def haversine(lat1, lon1, lat2, lon2, to_radians=True, earth_radius=6371):
+        """
+        Taken from Stackoverflow. This code can be applied to a pandas dataframe to
+        compute the distance between two lat and long points
+        ----------
+        lat1 : int
+            lattitude for 1st point
+        lon1 : int
+            longitude for 1st point
+        lat2 : int
+            lattitude for 2nd point
+        lon2 : int
+            longitude for 2nd point
+        to_radians : bool
+            convert to radians defaulted to TRUE
+        earth_radius : int
+            Earth's radius in kms
+        Returns
+        -------
+        int
+            Distance in kms
+        """
+        if to_radians:
+            lat1, lon1, lat2, lon2 = np.radians([lat1, lon1, lat2, lon2])
+
+        a = np.sin((lat2 - lat1) / 2.0) ** 2 + \
+            np.cos(lat1) * np.cos(lat2) * np.sin((lon2 - lon1) / 2.0) ** 2
+
+        distance_kms = earth_radius * 2 * np.arcsin(np.sqrt(a))
+        distance_miles = distance_kms*0.62
+
+
+        return distance_miles
+
 
     @staticmethod
     def location_collector_v2(response_object=[]):
@@ -506,6 +541,8 @@ class telematics:
             agg_destination_dict = {}
 
         return agg_destination_dict
+
+
 
     def sequence_collector(response_object=[], data_handler=[]):
     
