@@ -72,7 +72,8 @@ class telematics:
         query_arg = {"query" : query_value}
 
         #Get and check
-        response = requests.post(self.api_url,headers= self.headers, json= query_arg, stream= stream_request)
+        #requests.get('https://github.com', verify=False)
+        response = requests.post(self.api_url,headers= self.headers, json= query_arg, stream= stream_request, verify=False)
         assert response.status_code == 200, "Response Code: " + str(response.status_code)
 
         #Unpack
@@ -159,7 +160,7 @@ class telematics:
         #Get and check
         n_tries = 0
         while n_tries <= 3:
-            response = requests.post(self.api_url,headers= self.headers, json= query_arg, stream= stream_request)
+            response = requests.post(self.api_url,headers= self.headers, json= query_arg, stream= stream_request, verify=False)
             if response.status_code < 400:
                 break
             else:
