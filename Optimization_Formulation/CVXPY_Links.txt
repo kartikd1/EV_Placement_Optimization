@@ -1,0 +1,11 @@
+
+
+Linear Optimization Examples:
+https://www.cvxpy.org/examples/basic/linear_program.html
+
+
+CVXOPT Installation:
+https://cvxopt.org/install/index.html#
+
+CVXPY Installation:
+https://www.cvxpy.org/install/index.html
